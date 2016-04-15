@@ -5,6 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
+.DBStore
 
 # Distribution / packaging
 .Python
@@ -57,6 +58,8 @@ docs/_build/
 
 # PyBuilder
 target/
+
+venv/
 
 #Ipython Notebook
 .ipynb_checkpoints
