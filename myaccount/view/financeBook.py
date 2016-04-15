@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import Blueprint
-from ..models import FinanceBook
+from myaccount.models import FinanceBook
 
 finBook = Blueprint('financeBook',__name__)
 

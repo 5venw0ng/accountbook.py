@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
 
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from myaccount import db
 
-app = Flask(__name__)
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@127.0.0.1:3306/myfinance'
-#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-#db = SQLAlchemy(app)
 
 class FinanceUsers(db.Model):
 	__tablename__='FINANCE_USERS'
@@ -58,10 +53,10 @@ class FinanceTagsType(db.Model):
 class FinanceTags(db.Model):
 	__tablename__='FINANCE_TAGS'
 	id = db.Column("ID",db.Integer, primary_key=True)
-	tagType = db.Column('TAG_TYPE',db.String(10),db.ForeignKey('FINANCE_TAGS_TYPE.TAG_TYPE_ID')))
+	tagType = db.Column('TAG_TYPE',db.String(10),db.ForeignKey('FINANCE_TAGS_TYPE.TAG_TYPE_ID'))
 	tagName = db.Column('TAG_NAME',db.String(10))
 	tagComments = db.Column('TAG_COMMENTS',db.String(50))
-	bookId = db.Column('BOOK_ID',db.Integer,db.ForeignKey('FINANCE_BOOK.ID')))
+	bookId = db.Column('BOOK_ID',db.Integer,db.ForeignKey('FINANCE_BOOK.ID'))
 	contentTags = db.relationship('ContantTagAssoc', backref='FinTag',lazy='dynamic')
 	def __init__(self,tagType, tagName, tagComments):
 		self.tagType = tagType
@@ -101,34 +96,3 @@ class ContantTagAssoc(db.Model):
 
 	def __repr__(self):
 		return '<ContantTagAssoc %r>' % vars(self)
-
-if __name__ == '__main__':
-	pass
-	#financeUser = FinanceUsers('zhuce@wyl.im','admin','fucku')
-	#db.session.add(financeUser)
-	#db.session.commit()
-	#app.run(debug=True)
-	#tagList = FinanceTags.query.all()
-	#print(tagList)
-
-	#finBook = FinanceBook('默认账本',1)
-	#db.session.add(finBook)
-	#db.session.commit()
-
-	#content = FinanceContent(-19.8,datetime.now(),'测试添加一条数据',finBook.id)
-	#db.session.add(content)
-	#db.session.commit()
-
-	#book = FinanceBook.query.filter_by(id='1').first()
-	#print(book.finUser)
-
-	#contentTag = ContantTagAssoc(1,2)
-	#db.session.add(contentTag)
-	#db.session.commit()
-
-	#content = FinanceContent.query.filter_by(id='1').first()
-	#print(content.finBook)
-
-	#contentTag = ContantTagAssoc.query.filter_by(contentId='1').first()
-	#print(contentTag.FinTag.tagName)
-	#print(contentTag.FinContent.comments)

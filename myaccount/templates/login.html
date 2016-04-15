@@ -1,8 +1,19 @@
 {% extends "layout.html" %}
 {% block body %}
-<form action="/login" method="post">
-	<input type="text" name="username"/><br/>
-	<input type="text" name="password"/><br/>
-	<input type="submit" value="登陆"/>
+<form class="am-form" action="/login" method="post">
+  <fieldset>
+    <legend>请先登录</legend>
+
+    <div class="am-form-group">
+      <label for="doc-ipt-email-1">邮件</label>
+      <input type="email" class="am-form-field am-radius" id="doc-ipt-email-1" placeholder="输入电子邮件">
+    </div>
+
+    <div class="am-form-group">
+      <label for="doc-ipt-pwd-1">密码</label>
+      <input type="password" class="am-form-field am-radius" id="doc-ipt-pwd-1" placeholder="设置个密码吧">
+    </div>
+	<p><button type="submit" class="am-btn am-btn-primary">登录</button></p>
+  </fieldset>
 </form>
 {% endblock %}
