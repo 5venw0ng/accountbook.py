@@ -1,2 +1,25 @@
-success!
-{{result}}
+{% extends "layout.html" %}
+{% block body %}
+<form action="" class="am-form am-form-horizontal">
+<div class="am-form-group">
+	<div class="am-u-sm-6" style="text-align: right;">
+		<label><input type="radio" name="inOut" value="OUT">&nbsp;&nbsp;支出</label>
+	</div>
+	<div class="am-u-sm-6" style="text-align: left;">
+		<label><input type="radio" name="inOut" value="IN">&nbsp;&nbsp;收入</label>
+	</div>
+</div>
+
+<div class="am-form-group">
+	<input type="number" class="am-form-field" placeholder="输入金额" required />
+</div>
+
+<div class="am-form-group">
+	<label for="doc-ipt-3-a" class="am-u-sm-3 am-form-label">场景</label>
+	<div class="am-u-sm-9">
+	  	<input type="email" id="doc-ipt-3-a" class="am-form-field" placeholder="输入你的电子邮件">
+	</div>
+</div>
+
+</form>
+{% endblock %}

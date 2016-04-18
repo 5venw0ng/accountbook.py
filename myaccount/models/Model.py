@@ -41,7 +41,7 @@ class FinanceTagsType(db.Model):
 
 	tagTypeId = db.Column('TAG_TYPE_ID',db.String(10),primary_key=True)
 	description = db.Column('DESCRIPTION',db.String(10))
-	tagTypeChildren = db.relationship('FinanceTags', backref='tagType',lazy='dynamic')
+	tagTypeChildren = db.relationship('FinanceTags', backref='tagTypeEntity',lazy='dynamic')
 	def __init__(self,tagTypeId, description):
 		self.tagTypeId = tagTypeId
 		self.description = description
@@ -70,6 +70,7 @@ class FinanceContent(db.Model):
 	__tablename__='FINANCE_CONTENT'
 	id = db.Column("ID",db.Integer, primary_key=True)
 	amount = db.Column('AMOUNT',db.Float)
+	inOut = db.Column('INOUT',db.String(50))
 	craetedDate = db.Column('CREATED_DATE',db.DateTime)
 	billingDate = db.Column('BILLING_DATE',db.Date)
 	comments = db.Column('COMMNETS',db.String(50))

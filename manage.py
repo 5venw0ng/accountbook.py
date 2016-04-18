@@ -7,6 +7,7 @@ import myaccount.models
 
 
 app.debug = True
+app.secret_key="test"
 manager = Manager(app)
 
 #启动服务器
