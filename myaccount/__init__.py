@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@127.0.0.1:3306/myfinance'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+#app.config["SQLALCHEMY_ECHO"] = True
 db = SQLAlchemy(app)
 
 # 注册蓝图（好像只有route会用这个）

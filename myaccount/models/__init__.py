@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
-from .Model import FinanceUsers,FinanceBook,FinanceTags,FinanceContent,ContantTagAssoc
+from .Model import FinanceUsers,FinanceBook,FinanceTags,FinanceTagsType,FinanceContent,ContantTagAssoc
 
