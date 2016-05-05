@@ -51,3 +51,7 @@ def logout():
 	session['loginId'] = None
 	session['userId'] = None
 	return redirect(url_for(".login"))
+
+@main.route("/register")
+def register():
+	return render_template("register.html")

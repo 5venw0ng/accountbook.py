@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="am-container">
+	<form class="am-form" action="/finbook/saveFinBook" method="post">
+	  <fieldset>
+	   <div class="am-form-group">
+	      <label for="doc-ipt-email-1">账本名称</label>
+	      <input type="text" class="am-form-field am-radius" name="bookName" required placeholder="给账本起个名字吧" value="{{book.bookName}}">
+	    </div>
+
+	    {% if book %}
+	    	<input type="hidden" name="id" value="{{book.id}}"/>
+			<p><button type="submit" class="am-btn am-btn-primary am-btn-block">更新</button></p>
+		{% else %}
+			<p><button type="submit" class="am-btn am-btn-primary am-btn-block">创建</button></p>
+		{% endif %}
+	  </fieldset>
+	</form>
+</div>
+
+{% endblock %}

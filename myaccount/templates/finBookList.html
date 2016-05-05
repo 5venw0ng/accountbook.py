@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="am-container">
+	<ul class="am-list am-list-striped">
+	{% if books %}
+		{% for book in books %}
+		  <li><a href="/finbook/EditFinBook/{{book.id}}"><i class="am-icon-book am-icon-fw"></i> {{book.bookName}}</a></li>
+		{% endfor %}
+	{% endif %}
+	</ul>
+
+	<a class="am-btn am-btn-primary" href="/finbook/EditFinBook" role="button">
+	  <i class="am-icon-plus"></i>
+	  添加一个账本
+	</a>
+	
+</div>
+
+
+
+{% endblock %}
