@@ -12,3 +12,7 @@ my account book.py
 
  - 本程序使用 Python（3.5） 开发，使用 Flask 框架以及其他库，具体会在 requirements.txt 文件中
  - 案例中的数据库使用MySQL
+
+#### 感谢
+
+ - amazeui http://amazeui.org/
