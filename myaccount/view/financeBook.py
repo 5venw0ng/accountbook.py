@@ -32,7 +32,6 @@ def saveFinBook():
 		book = FinanceBook.query.get(id)
 		book.bookName = bookName
 	else:
-		print("======")
 		newBook = FinanceBook(bookName,session.get("userId"))
 		db.session.add(newBook)
 	db.session.commit()

@@ -1,16 +1,16 @@
 {% extends "layout.html" %}
 {% block body %}
-<form class="am-form" action="/login" method="post">
+<form class="am-form" action="/register" method="post" data-am-validator>
   <fieldset>
     <legend>请先登录</legend>
 
     <div class="am-form-group">
       <label for="doc-ipt-email-1">邮箱</label>
-      <input type="email" class="am-form-field am-radius" name="loginId" placeholder="请输入您的Email地址" required>
+      <input type="email" class="am-form-field am-radius" name="loginId" placeholder="请输入您的Email地址" required value="{{loginId}}">
     </div>
     <div class="am-form-group">
       <label for="doc-ipt-email-1">昵称</label>
-      <input type="text" class="am-form-field am-radius" name="loginId" placeholder="您的昵称" required>
+      <input type="text" class="am-form-field am-radius" name="userName" placeholder="您的昵称" required value="{{userName}}">
     </div>
 
     <div class="am-form-group">

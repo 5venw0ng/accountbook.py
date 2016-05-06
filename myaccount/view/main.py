@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint,render_template,request,redirect, url_for, session,flash
-from myaccount import db
+from myaccount import db,app
 from myaccount.models import FinanceUsers,FinanceBook,FinanceTags,FinanceTagsType
 import hashlib
 import time
@@ -37,7 +37,7 @@ def login():
 		email = request.form['email']
 		password = request.form['password']
 		hash_md5 = hashlib.md5(password.encode('utf-8'))
-		print(hash_md5.hexdigest().upper())
+		
 		result = FinanceUsers.query.filter_by(loginId=email,password=hash_md5.hexdigest().upper()).first()
 		if result == None:
 			flash('账号或者密码错误')
@@ -52,6 +52,45 @@ def logout():
 	session['userId'] = None
 	return redirect(url_for(".login"))
 
-@main.route("/register")
+@main.route("/register",methods=["POST","GET"])
 def register():
-	return render_template("register.html")
+	if request.method == "GET":
+		return render_template("register.html")
+	else:
+		loginId = request.form.get("loginId")
+		userName = request.form.get("userName")
+		password = request.form.get("password")
+		confirmPwd = request.form.get("confirmPassword")
+		if( login==None or userName==None or password==None or confirmPwd==None):
+			flash('账号、昵称、密码都不能为空')
+			return render_template("register.html",loginId=loginId,userName=userName)
+		if password!=confirmPwd:
+			flash('2次密码输入不一致')
+			return render_template("register.html",loginId=loginId,userName=userName)
+		hash_md5 = hashlib.md5(password.encode('utf-8'))
+		password = hash_md5.hexdigest().upper()
+		result = FinanceUsers.query.filter_by(loginId=loginId).first()
+		if result == None:
+			newuser = FinanceUsers(loginId,userName,password)
+			db.session.add(newuser)
+			db.session.flush()
+
+			#默认添加一个账本
+			newBook = FinanceBook('默认账本',newuser.id)
+			db.session.add(newBook)
+			db.session.flush()
+
+			session['loginId'] = newuser.loginId
+			session['userId'] = newuser.id
+
+			flash('注册成功，自动创建一个账本')
+			return redirect(url_for("financeBook.bookList"))
+			
+		else:
+			flash('%s 已经存在' % loginId)
+			return render_template("register.html",userName=userName)
+
+@app.after_request
+def call_after_request_callbacks(response):
+	db.session.commit()
+	return response
