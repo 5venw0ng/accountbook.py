@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="am-container">
+	<ul class="am-list am-list-striped">
+	{% if books %}
+		{% for book in books %}
+		  <li><a href="/fintag/tagList/{{book.id}}"><i class="am-icon-book am-icon-fw"></i> {{book.bookName}}</a></li>
+		{% endfor %}
+	{% endif %}
+	</ul>
+</div>
+
+
+
+{% endblock %}

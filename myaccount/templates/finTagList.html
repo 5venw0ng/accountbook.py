@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="am-container">
+	<ul class="am-list am-list-static">
+		<li><a href="/fintag/bookList" style="padding: 0px">[{{book.bookName}}] 下的标签列表(点击回到账本列表)</a></li>
+		<li onclick="editTag()">添加一个标签</li>
+	{% if tagList %}
+		{% for tag in tagList %}
+		  <li onclick="editTag('{{tag.id}}','{{tag.tagName}}','{{tag.tagType}}','{{tag.tagComments}}')"><span class="am-badge">{{tag.tagTypeEntity.description}}</span>
+		  {{tag.tagName}}
+		  </li>
+		{% endfor %}
+	{% endif %}
+	</ul>
+</div>
+
+
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="tagModel">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">编辑
+      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+    </div>
+    <div class="am-modal-bd">
+      <form class="am-form" id="saveForm" action="/fintag/saveFinTag" method="post">
+		  <fieldset>
+		   <div class="am-form-group">
+		      <input type="text" class="am-form-field am-radius" id="tagName" name="tagName" required placeholder="标签名字">
+		    </div>
+		    <div class="am-form-group">
+		      <input type="text" class="am-form-field am-radius" id="tagComments" name="tagComments" placeholder="说明，20个字以内">
+		    </div>
+		    <div class="am-form-group">
+				<select name="tagType" id="tagType">
+					
+				</select>
+		    </div>
+
+	    	<input type="hidden" id="id" name="id" value=""/>
+	    	<input type="hidden" id="bookId" name="bookId" value="{{book.id}}"/>
+			<p><button type="submit" id="submitBtn" class="am-btn am-btn-primary am-btn-block">创建</button></p>
+			<p><button type="button" id="deleteBtn" class="am-btn am-btn-danger am-btn-block">删除</button></p>
+		  </fieldset>
+	</form>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+	var tagTypeList = [{tagTypeId:"SCENES",tagTypeName:"场景"},{tagTypeId:"CATEGORY",tagTypeName:"分类"}];
+	$(function(){
+		
+	});
+	function editTag(id,name,tagTypeId,tagComments){
+		var model = $('#tagModel');
+		if(id!=undefined){
+			$("#submitBtn").text("更新");
+			$("#deleteBtn").attr("onclick","deleteTag('" + id + "','{{book.id}}')").show();
+		}else{
+			$("#deleteBtn").hide();
+		}
+		$("#id").val(id);
+		$("#tagName").val(name);
+		$("#tagComments").val(tagComments);
+
+		var optionHtml = "";
+		$("#tagType").html("");
+		$(tagTypeList).each(function(k,v){
+			if(tagTypeId==v.tagTypeId){
+				optionHtml+="<option value='" + v.tagTypeId + "' selected>" + v.tagTypeName + "</option>"	
+			}else{
+				optionHtml+="<option value='" + v.tagTypeId + "'>" + v.tagTypeName + "</option>"	
+			}
+		});
+		$(optionHtml).appendTo($("#tagType"));
+
+		model.modal();
+	}
+
+	function deleteTag(tagId,bookId){
+		if(window.confirm("删除这个标签会连同删除所有记账条目的标签关联，不可恢复，是否继续？")){
+			window.location.href="/fintag/delTag?id=" + tagId + "&bookId=" + bookId;
+		}
+	}
+</script>
+{% endblock %}

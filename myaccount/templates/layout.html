@@ -33,6 +33,11 @@
 
   <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/amazeui.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/app.css') }}"></head>
+  <!--[if (gte IE 9)|!(IE)]>
+  <!-->
+  <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+  <!--<![endif]-->
+  <script src="{{ url_for('static', filename='assets/js/amazeui.min.js') }}"></script>
 <body>
   <header data-am-widget="header"
           class="am-header am-header-default">
@@ -61,7 +66,7 @@
       <a href="/" class="" >记账</a>
     </li>
     <li>
-      <a href="##" class="" >标签配置</a>
+      <a href="/fintag/bookList" class="" >标签配置</a>
     </li>
     <li>
       <a href="#c3" class="" >数据</a>
@@ -105,13 +110,9 @@
   {% endif %}
 {% endwith %}
 
-<!--在这里编写你的代码-->
+
 {% block body %}{% endblock %}
-<!--[if (gte IE 9)|!(IE)]>
-<!-->
-<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
-<!--<![endif]-->
-<script src="{{ url_for('static', filename='assets/js/amazeui.min.js') }}"></script>
+
 
 </body>
 </html>

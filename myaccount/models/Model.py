@@ -58,10 +58,11 @@ class FinanceTags(db.Model):
 	tagComments = db.Column('TAG_COMMENTS',db.String(50))
 	bookId = db.Column('BOOK_ID',db.Integer,db.ForeignKey('FINANCE_BOOK.ID'))
 	contentTags = db.relationship('ContantTagAssoc', backref='FinTag',lazy='dynamic')
-	def __init__(self,tagType, tagName, tagComments):
+	def __init__(self,tagType, tagName, tagComments,bookId):
 		self.tagType = tagType
 		self.tagName = tagName
 		self.tagComments = tagComments
+		self.bookId = bookId
 
 	def __repr__(self):
 		return '<FINANCE_TAGS %r>' % vars(self)
