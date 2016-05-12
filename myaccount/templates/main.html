@@ -1,26 +1,30 @@
 {% extends "layout.html" %}
 {% block body %}
-<form action="" class="am-form am-form-horizontal">
+<form action="" class="am-form am-form-horizontal" method="post" id="cntForm">
+<fieldset>
 <div class="am-form-group">
-	<div class="am-u-sm-6" style="text-align: right;">
-		<label><input type="radio" name="inOut" value="OUT" checked="checked">&nbsp;&nbsp;支出</label>
-	</div>
-	<div class="am-u-sm-6" style="text-align: left;">
-		<label><input type="radio" name="inOut" value="IN">&nbsp;&nbsp;收入</label>
+
+	<div class="am-btn-group doc-js-btn-1" data-am-button style="width:100%">
+		  <label class="am-btn am-btn-default am-active" style="width:50%">
+		    <input type="radio" name="inOut" value="OUT" checked>支出
+		  </label>
+		  <label class="am-btn am-btn-default" style="width:50%">
+		    <input type="radio" name="inOut" value="IN">收入
+		  </label>
 	</div>
 </div>
 
 <div class="am-form-group">
 	<label class="am-u-sm-3 am-form-label">金额</label>
 	<div class="am-u-sm-9" style="text-align: right;">
-		<input type="number" name="amount" class="am-form-field" placeholder="输入金额" required />
+		<input type="text" pattern="^([+-]?\d+\.?\d*)$" name="amount" id="amount" class="am-form-field" placeholder="输入金额" required />
 	</div>
 </div>
 
 <div class="am-form-group">
 	<label for="doc-ipt-3-a" class="am-u-sm-3 am-form-label">账本</label>
 	<div class="am-u-sm-9">
-	      <select id="doc-select-1">
+	      <select name="bookId">
   			{% if books %}
 			    {% for book in books %}
 			      <option value="{{book.id}}">{{book.bookName}}</option>
@@ -36,7 +40,7 @@
       <div class="am-form-group">
 		<label for="doc-ipt-3-a" class="am-u-sm-3 am-form-label">{{tagEntity.tagType.description}}</label>
 		<div class="am-u-sm-9">
-		      <select id="doc-select-1">
+		      <select data-am-selected name="selectTag">
 		        {% for tag in tagEntity.tagList %}
 		        	<option value="{{tag.id}}">{{tag.tagName}}</option>
 		        {% endfor %}
@@ -50,17 +54,61 @@
 
 <div class="am-form-group am-form-icon">
 	<i class="am-icon-calendar"></i>
-    <input type="text" class="am-form-field" id="billingDate" value="{{currentDate}}" data-am-datepicker readonly required>
+    <input type="text" class="am-form-field" id="billingDate" name="billingDate" value="{{currentDate}}" data-am-datepicker readonly required>
 </div>
 
 <div class="am-form-group">
-	<input type="text" class="am-form-field am-radius" id="comments" placeholder="备注" />
+	<input type="text" class="am-form-field am-radius" id="comments" name="comments" placeholder="备注" />
 </div>
 <div class="am-form-group">
 	<div class="am-u-sm-10 am-u-sm-offset-4">
       <button type="submit" class="am-btn am-btn-primary">保存</button>
     </div>
 </div>
-
+</fieldset>
 </form>
+<div class="am-container">
+	
+	{% if currentDateBills %}
+		<ul class="am-list am-list-static am-list-border">
+		{% for bill in currentDateBills %}
+			<li>
+				<a href="javascript:;" style="padding-left: 0px;padding-top: 5px;padding-bottom: 5px">{%if bill.inOut=='IN' %}收入{% else %}支出{% endif %}：{{bill.amount}}</a>
+				<a href="javascript:;" style="padding-left: 0px;display:initial">{{bill.billingDate}}</a>
+				<a href="javascript:;" style="padding-left: 0px;display:initial">
+				{% for tag in bill.contentTags %}
+				{{tag.tagId}} / 
+				{% endfor %}
+				</a>
+			</li>
+	    {% endfor %}
+	    </ul>
+  	{% endif %}
+	
+</div>
+
+<script type="text/javascript">
+	$(function() {
+		var $radios = $('[name="inOut"]');
+		$radios.on('change',function() {
+		  console.log('单选框当前选中的是：', $radios.filter(':checked').val());
+		});
+
+		$('#cntForm').ajaxForm({
+			url:"/fincnt/savecnt",　　　　　　//form提交数据的地址
+			type:"POST",　　　  //form提交的方式(method:post/get)
+			beforeSubmit:function(){
+				//console.log($('#cntForm').formSerialize()); 
+			},　　//提交前执行的回调函数
+			success:function(result){
+				if(result=="Y"){
+					$("#comments").val("");
+					$("#amount").val("");
+					alert("保存成功");
+				}
+			}
+		});
+	});
+
+</script>
 {% endblock %}

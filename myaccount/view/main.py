@@ -2,7 +2,7 @@
 
 from flask import Blueprint,render_template,request,redirect, url_for, session,flash
 from myaccount import db,app
-from myaccount.models import FinanceUsers,FinanceBook,FinanceTags,FinanceTagsType
+from myaccount.models import FinanceUsers,FinanceBook,FinanceTags,FinanceTagsType,FinanceContent
 import hashlib
 import time
 
@@ -26,8 +26,12 @@ def showMain():
 			tagList = FinanceTags.query.filter_by(tagType=tagTypeEntity.tagType).all()
 			tagType = FinanceTagsType.query.filter_by(tagTypeId=tagTypeEntity.tagType).first()
 			tagListGroup.append({'tagType':tagType,'tagList':tagList})
-		#print(tagListGroup)
-		return render_template("main.html",currentDate=time.strftime("%Y-%m-%d", time.localtime()),books=books,tagListGroup=tagListGroup)
+
+
+		#查询当天的账单
+		currentDateBills = FinanceContent.query.filter_by(billingDate=time.strftime("%Y-%m-%d", time.localtime())).all()
+
+		return render_template("main.html",currentDate=time.strftime("%Y-%m-%d", time.localtime()),books=books,tagListGroup=tagListGroup,currentDateBills=currentDateBills)
 
 @main.route("/login",methods=["POST","GET"])
 def login():

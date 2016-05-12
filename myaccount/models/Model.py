@@ -76,10 +76,11 @@ class FinanceContent(db.Model):
 	billingDate = db.Column('BILLING_DATE',db.Date)
 	comments = db.Column('COMMNETS',db.String(50))
 	bookId = db.Column('BOOK_ID',db.Integer,db.ForeignKey('FINANCE_BOOK.ID'))
-	contentTags = db.relationship('ContantTagAssoc', backref='FinContent',lazy='dynamic')
+	contentTags = db.relationship('ContantTagAssoc', backref='FinContent',lazy='joined')
 
-	def __init__(self,amount, billingDate,comments, bookId):
+	def __init__(self,inOut,amount, billingDate,comments, bookId):
 		self.amount = amount
+		self.inOut = inOut
 		self.billingDate = billingDate
 		self.bookId = bookId
 		self.comments = comments

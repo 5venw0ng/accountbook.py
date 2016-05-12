@@ -16,9 +16,11 @@ def register_blueprints(app):
 	from myaccount.view import main
 	from myaccount.view import financeBook
 	from myaccount.view import fintag
+	from myaccount.view import fincnt
 	app.register_blueprint(main.main,url_prefix="")
 	app.register_blueprint(financeBook.finBook,url_prefix="/finbook")
 	app.register_blueprint(fintag.finTag,url_prefix="/fintag")
+	app.register_blueprint(fincnt.fincontent,url_prefix="/fincnt")
 
 def initLogInfo(app):
 	handler = logging.FileHandler('flask.log')
