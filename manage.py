@@ -20,7 +20,7 @@ initLogInfo(app)
 @manager.command
 def runserver():
 	register_blueprints(app)
-	app.run()
+	app.run(host='0.0.0.0',port=5000)
 
 @manager.command
 def initdb():

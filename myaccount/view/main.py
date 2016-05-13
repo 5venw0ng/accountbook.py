@@ -28,10 +28,8 @@ def showMain():
 			tagListGroup.append({'tagType':tagType,'tagList':tagList})
 
 
-		#查询当天的账单
-		currentDateBills = FinanceContent.query.filter_by(billingDate=time.strftime("%Y-%m-%d", time.localtime())).all()
-
-		return render_template("main.html",currentDate=time.strftime("%Y-%m-%d", time.localtime()),books=books,tagListGroup=tagListGroup,currentDateBills=currentDateBills)
+		
+		return render_template("main.html",currentDate=time.strftime("%Y-%m-%d", time.localtime()),books=books,tagListGroup=tagListGroup)
 
 @main.route("/login",methods=["POST","GET"])
 def login():

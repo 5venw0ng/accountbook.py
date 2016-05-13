@@ -67,23 +67,7 @@
 </div>
 </fieldset>
 </form>
-<div class="am-container">
-	
-	{% if currentDateBills %}
-		<ul class="am-list am-list-static am-list-border">
-		{% for bill in currentDateBills %}
-			<li>
-				<a href="javascript:;" style="padding-left: 0px;padding-top: 5px;padding-bottom: 5px">{%if bill.inOut=='IN' %}收入{% else %}支出{% endif %}：{{bill.amount}}</a>
-				<a href="javascript:;" style="padding-left: 0px;display:initial">{{bill.billingDate}}</a>
-				<a href="javascript:;" style="padding-left: 0px;display:initial">
-				{% for tag in bill.contentTags %}
-				{{tag.tagId}} / 
-				{% endfor %}
-				</a>
-			</li>
-	    {% endfor %}
-	    </ul>
-  	{% endif %}
+<div class="am-container" id="currentDateBillDiv">
 	
 </div>
 
@@ -104,10 +88,12 @@
 				if(result=="Y"){
 					$("#comments").val("");
 					$("#amount").val("");
-					alert("保存成功");
+					$("#currentDateBillDiv").load("/fincnt/loadCurrentDateBill");
 				}
 			}
 		});
+
+		$("#currentDateBillDiv").load("/fincnt/loadCurrentDateBill");
 	});
 
 </script>

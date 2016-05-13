@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint,render_template,request,redirect, url_for, session,flash
+from sqlalchemy import desc
 from myaccount.models import FinanceContent,ContantTagAssoc
 from myaccount import db
 import time
@@ -29,3 +30,9 @@ def savecnt():
 		return "发生错误"
 	finally:
 		return "Y"
+
+@fincontent.route("/loadCurrentDateBill",methods=["GET"])
+def loadCurrentDateBill():
+	#查询当天的账单
+	currentDateBills = FinanceContent.query.filter_by(billingDate=time.strftime("%Y-%m-%d", time.localtime())).order_by(desc(FinanceContent.craetedDate)).all()
+	return render_template("currentDateBill.html",currentDateBills=currentDateBills)
