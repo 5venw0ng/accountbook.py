@@ -19,8 +19,7 @@ def showMain():
 		books = FinanceBook.query.filter_by(userId=session.get("userId")).all()
 		
 		#取第一个，查分类
-		firstBook = books[0]
-		tagTypes = FinanceTags.query.filter_by(bookId=firstBook.id).group_by(FinanceTags.tagType).all()
+		tagTypes = FinanceTags.query.filter_by(userId=session.get("userId")).group_by(FinanceTags.tagType).all()
 		tagListGroup = []
 		for tagTypeEntity in tagTypes:
 			tagList = FinanceTags.query.filter_by(tagType=tagTypeEntity.tagType).all()
@@ -53,6 +52,32 @@ def logout():
 	session['loginId'] = None
 	session['userId'] = None
 	return redirect(url_for(".login"))
+
+@main.route("/changePasswod",methods=["POST","GET"])
+def changePasswod():
+	if request.method == "POST":
+		userId = session.get("userId")
+		oldpassword = request.form.get("oldpassword")
+		password = request.form.get("password")
+		confirmPwd = request.form.get("confirmPassword")
+
+		currentUser = FinanceUsers.query.get(userId)
+		hash_md5 = hashlib.md5(oldpassword.encode('utf-8'))
+		oldpassword = hash_md5.hexdigest().upper()
+		if currentUser.password == oldpassword:
+			if password == confirmPwd:
+				hash_md5 = hashlib.md5(password.encode('utf-8'))
+				password = hash_md5.hexdigest().upper()
+				currentUser.password = password
+				db.session.add(currentUser)
+				db.session.flush()
+				flash('密码修改成功，请重新登录')
+				return redirect(url_for(".logout"))
+			else:
+				flash('新密码2次输入不一样')
+		else:
+			flash('原始密码错误！')
+	return render_template("changePasswod.html")
 
 @main.route("/register",methods=["POST","GET"])
 def register():

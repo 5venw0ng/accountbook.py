@@ -7,7 +7,7 @@
   <meta name="keywords" content="">
   <meta name="viewport"
         content="width=device-width, initial-scale=1">
-  <title>Hello Amaze UI</title>
+  <title>MAB.PY - My account book Python</title>
 
   <!-- Set render engine for 360 browser -->
   <meta name="renderer" content="webkit">
@@ -31,14 +31,28 @@
   <meta name="msapplication-TileImage" content="{{ url_for('static', filename='assets/i/app-icon72x72@2x.png') }}">
   <meta name="msapplication-TileColor" content="#0e90d2">
 
+  <!-- uc强制竖屏 -->
+  <meta name="screen-orientation" content="portrait">
+  <!-- QQ强制竖屏 -->
+  <meta name="x5-orientation" content="portrait">
+  <!-- UC强制全屏 -->
+  <meta name="full-screen" content="yes">
+  <!-- QQ强制全屏 -->
+  <meta name="x5-fullscreen" content="true">
+  <!-- UC应用模式 -->
+  <meta name="browsermode" content="application">
+  <!-- QQ应用模式 -->
+  <meta name="x5-page-mode" content="app">
+
+
   <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/amazeui.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/app.css') }}"></head>
   <!--[if (gte IE 9)|!(IE)]>
   <!-->
   <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
   <!--<![endif]-->
-  <script src="{{ url_for('static', filename='assets/js/amazeui.min.js') }}"></script>
   <script src="{{ url_for('static', filename='jquery.form.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/amazeui.min.js') }}"></script>
 <body>
   <header data-am-widget="header"
           class="am-header am-header-default">
@@ -67,7 +81,7 @@
       <a href="/" class="" >记账</a>
     </li>
     <li>
-      <a href="/fintag/bookList" class="" >标签配置</a>
+      <a href="/fintag/tagList" class="" >标签配置</a>
     </li>
     <li>
       <a href="#c3" class="" >数据</a>
@@ -84,7 +98,7 @@
       <a href="##" class="" >其他设置</a>
       <ul class="am-menu-sub am-collapse  am-avg-sm-3 ">
         <li class="">
-          <a href="##" class="" >密码修改</a>
+          <a href="/changePasswod" class="" >密码修改</a>
         </li>
       </ul>
     </li>
@@ -118,7 +132,12 @@
     $(function(){
         setTimeout(function(){
           $('#divAlert').alert('close')
-        }, 3000);
+        }, 2000);
+
+        $.fn.amSelected = $.fn.selected.noConflict();
+
+        // 使用 Amaze UI 的 selected
+        $('[data-am-selected]').amSelected();
     });
 </script>
 </body>

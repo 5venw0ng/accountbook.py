@@ -12,7 +12,8 @@ class FinanceUsers(db.Model):
 	username = db.Column('USER_NAME',db.String(10))
 	password = db.Column('PASSWORD',db.String(64))
 	books = db.relationship('FinanceBook', backref='finUser',lazy='dynamic')
-
+	userTags = db.relationship('FinanceTags', backref='craeteUser',lazy='dynamic')
+	userContents = db.relationship('FinanceContent', backref='cntUser',lazy='dynamic')
 	def __init__(self,loginId, username, password):
 		self.loginId = loginId
 		self.username = username
@@ -26,7 +27,6 @@ class FinanceBook(db.Model):
 	id = db.Column("ID",db.Integer, primary_key=True)
 	bookName = db.Column('BOOK_NAME',db.String(20))
 	finContents = db.relationship('FinanceContent', backref='finBook',lazy='dynamic')
-	bookTags = db.relationship('FinanceTags', backref='finBook',lazy='dynamic')
 	userId = db.Column('USER_ID',db.Integer,db.ForeignKey('FINANCE_USERS.ID'))
 
 	def __init__(self,bookName,userId):
@@ -56,13 +56,13 @@ class FinanceTags(db.Model):
 	tagType = db.Column('TAG_TYPE',db.String(10),db.ForeignKey('FINANCE_TAGS_TYPE.TAG_TYPE_ID'))
 	tagName = db.Column('TAG_NAME',db.String(10))
 	tagComments = db.Column('TAG_COMMENTS',db.String(50))
-	bookId = db.Column('BOOK_ID',db.Integer,db.ForeignKey('FINANCE_BOOK.ID'))
+	userId = db.Column('USER_ID',db.Integer,db.ForeignKey('FINANCE_USERS.ID'))
 	contentTags = db.relationship('ContantTagAssoc', backref='FinTag',lazy='dynamic')
-	def __init__(self,tagType, tagName, tagComments,bookId):
+	def __init__(self,tagType, tagName, tagComments,userId):
 		self.tagType = tagType
 		self.tagName = tagName
 		self.tagComments = tagComments
-		self.bookId = bookId
+		self.userId = userId
 
 	def __repr__(self):
 		return '<FINANCE_TAGS %r>' % vars(self)
@@ -76,14 +76,16 @@ class FinanceContent(db.Model):
 	billingDate = db.Column('BILLING_DATE',db.Date)
 	comments = db.Column('COMMNETS',db.String(50))
 	bookId = db.Column('BOOK_ID',db.Integer,db.ForeignKey('FINANCE_BOOK.ID'))
+	userId = db.Column('USER_ID',db.Integer,db.ForeignKey('FINANCE_USERS.ID'))
 	contentTags = db.relationship('ContantTagAssoc', backref='FinContent',lazy='joined')
 
-	def __init__(self,inOut,amount, billingDate,comments, bookId):
+	def __init__(self,inOut,amount, billingDate,comments, bookId,userId):
 		self.amount = amount
 		self.inOut = inOut
 		self.billingDate = billingDate
 		self.bookId = bookId
 		self.comments = comments
+		self.userId = userId
 
 	def __repr__(self):
 		return '<FinanceContent %r>' % vars(self)

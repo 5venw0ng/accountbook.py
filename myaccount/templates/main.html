@@ -24,7 +24,7 @@
 <div class="am-form-group">
 	<label for="doc-ipt-3-a" class="am-u-sm-3 am-form-label">账本</label>
 	<div class="am-u-sm-9">
-	      <select name="bookId">
+	      <select name="bookId" data-am-selected="{btnWidth: '100%'}">
   			{% if books %}
 			    {% for book in books %}
 			      <option value="{{book.id}}">{{book.bookName}}</option>
@@ -40,7 +40,7 @@
       <div class="am-form-group">
 		<label for="doc-ipt-3-a" class="am-u-sm-3 am-form-label">{{tagEntity.tagType.description}}</label>
 		<div class="am-u-sm-9">
-		      <select data-am-selected name="selectTag">
+		      <select data-am-selected="{btnWidth: '100%'}" name="selectTag">
 		        {% for tag in tagEntity.tagList %}
 		        	<option value="{{tag.id}}">{{tag.tagName}}</option>
 		        {% endfor %}

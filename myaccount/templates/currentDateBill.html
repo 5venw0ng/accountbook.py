@@ -3,15 +3,16 @@
 	{% for bill in currentDateBills %}
 		<li style="padding-bottom: 0px;padding-top: 0px;margin-bottom: 5px">
 			<div class="am-container" style="padding: 0px;">
-				<a href="javascript:;" style="padding-left: 0px;padding-top: 5px;padding-bottom: 5px">{%if bill.inOut=='IN' %}收入{% else %}支出{% endif %}：{{bill.amount}}</a>
-			</div>
-			<div class="am-container" style="padding: 0px;">
-				<a href="javascript:;" style="padding-left: 0px;display:initial;padding-top: 5px;float: left">{{bill.billingDate}}</a>
-				<a href="javascript:;" style="padding-left: 0px;display:initial;padding-top: 5px;float: right;">
+				<a href="javascript:;" style="padding-left: 0px;padding-top: 5px;padding-bottom: 5px">{%if bill.inOut=='IN' %}收入{% else %}支出{% endif %}</a>：{{bill.amount}}
+				<a href="javascript:;" style="padding-left: 0px;display:initial;padding-top: 5px;float: right">
 				{% for tag in bill.contentTags %}
-				{{tag.FinTag.tagName}} / 
+				<span class="am-badge am-badge-primary am-radius">{{tag.FinTag.tagName}}</span>
 				{% endfor %}
 				</a>
+			</div>
+			<div class="am-container" style="padding: 0px;">
+				<a href="javascript:;" style="padding-left: 0px;display:initial;padding-top: 5px;float: left;color: #000000">{{bill.billingDate}}</a>
+				<a href="javascript:;" style="padding-left: 0px;display:initial;padding-top: 5px;float: right;color: #000000">{{bill.comments}}</a>
 			</div>
 		</li>
     {% endfor %}

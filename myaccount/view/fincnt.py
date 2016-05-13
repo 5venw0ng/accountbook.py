@@ -19,7 +19,7 @@ def savecnt():
 		selectTag = request.form.getlist("selectTag")
 		billingDate = request.form.get("billingDate")
 		inOut = request.form.get("inOut")
-		newcnt = FinanceContent(inOut,amount,billingDate,comments,bookId)
+		newcnt = FinanceContent(inOut,amount,billingDate,comments,bookId,userId=session.get("userId"))
 		db.session.add(newcnt)
 		db.session.flush()
 

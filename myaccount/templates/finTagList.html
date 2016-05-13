@@ -3,7 +3,6 @@
 
 <div class="am-container">
 	<ul class="am-list am-list-static">
-		<li><a href="/fintag/bookList" style="padding: 0px">[{{book.bookName}}] 下的标签列表(点击回到账本列表)</a></li>
 		<li onclick="editTag()">添加一个标签</li>
 	{% if tagList %}
 		{% for tag in tagList %}
@@ -37,8 +36,7 @@
 		    </div>
 
 	    	<input type="hidden" id="id" name="id" value=""/>
-	    	<input type="hidden" id="bookId" name="bookId" value="{{book.id}}"/>
-			<p><button type="submit" id="submitBtn" class="am-btn am-btn-primary am-btn-block">创建</button></p>
+	    	<p><button type="submit" id="submitBtn" class="am-btn am-btn-primary am-btn-block">创建</button></p>
 			<p><button type="button" id="deleteBtn" class="am-btn am-btn-danger am-btn-block">删除</button></p>
 		  </fieldset>
 	</form>
@@ -54,7 +52,7 @@
 		var model = $('#tagModel');
 		if(id!=undefined){
 			$("#submitBtn").text("更新");
-			$("#deleteBtn").attr("onclick","deleteTag('" + id + "','{{book.id}}')").show();
+			$("#deleteBtn").attr("onclick","deleteTag('" + id + "')").show();
 		}else{
 			$("#deleteBtn").hide();
 		}
@@ -76,9 +74,9 @@
 		model.modal();
 	}
 
-	function deleteTag(tagId,bookId){
+	function deleteTag(tagId){
 		if(window.confirm("删除这个标签会连同删除所有记账条目的标签关联，不可恢复，是否继续？")){
-			window.location.href="/fintag/delTag?id=" + tagId + "&bookId=" + bookId;
+			window.location.href="/fintag/delTag?id=" + tagId;
 		}
 	}
 </script>
