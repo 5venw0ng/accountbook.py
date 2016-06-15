@@ -20,27 +20,12 @@
 		<input type="text" pattern="^([+-]?\d+\.?\d*)$" name="amount" id="amount" class="am-form-field" placeholder="输入金额" required />
 	</div>
 </div>
-
-<div class="am-form-group">
-	<label for="doc-ipt-3-a" class="am-u-sm-3 am-form-label">账本</label>
-	<div class="am-u-sm-9">
-	      <select name="bookId" data-am-selected="{btnWidth: '100%'}">
-  			{% if books %}
-			    {% for book in books %}
-			      <option value="{{book.id}}">{{book.bookName}}</option>
-			    {% endfor %}
-		  	{% endif %}
-	      </select>
-	      <span class="am-form-caret"></span>
-	</div>
-</div>
-
 {% if tagListGroup %}
     {% for tagEntity in tagListGroup %}
       <div class="am-form-group">
 		<label for="doc-ipt-3-a" class="am-u-sm-3 am-form-label">{{tagEntity.tagType.description}}</label>
 		<div class="am-u-sm-9">
-		      <select data-am-selected="{btnWidth: '100%'}" name="selectTag">
+		      <select name="selectTag">
 		        {% for tag in tagEntity.tagList %}
 		        	<option value="{{tag.id}}">{{tag.tagName}}</option>
 		        {% endfor %}
@@ -77,18 +62,19 @@
 		$radios.on('change',function() {
 		  console.log('单选框当前选中的是：', $radios.filter(':checked').val());
 		});
-
+		var progress = $.AMUI.progress;
 		$('#cntForm').ajaxForm({
 			url:"/fincnt/savecnt",　　　　　　//form提交数据的地址
 			type:"POST",　　　  //form提交的方式(method:post/get)
 			beforeSubmit:function(){
-				//console.log($('#cntForm').formSerialize()); 
+				progress.start();
 			},　　//提交前执行的回调函数
 			success:function(result){
 				if(result=="Y"){
 					$("#comments").val("");
 					$("#amount").val("");
 					$("#currentDateBillDiv").load("/fincnt/loadCurrentDateBill");
+					progress.done();
 				}
 			}
 		});

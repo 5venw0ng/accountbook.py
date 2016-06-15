@@ -12,11 +12,14 @@
 	    {% if book %}
 	    	<input type="hidden" name="id" value="{{book.id}}"/>
 			<p><button type="submit" class="am-btn am-btn-primary am-btn-block">更新</button></p>
+			<button type="button" onclick="if(window.confirm('切换到当前账本？')){window.location.href='/finbook/changeBook/{{book.id}}'}" class="am-btn am-btn-default am-btn-block">切换账本</button>
 		{% else %}
 			<p><button type="submit" class="am-btn am-btn-primary am-btn-block">创建</button></p>
 		{% endif %}
 	  </fieldset>
 	</form>
+
 </div>
+
 
 {% endblock %}

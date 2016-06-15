@@ -57,7 +57,7 @@
   <header data-am-widget="header"
           class="am-header am-header-default">
     <div class="am-header-right am-header-nav">
-      <a href="#left-link" class=""> <i class="am-header-icon am-icon-home"></i>
+      <a href="/" class=""> <i class="am-header-icon am-icon-home"></i>
       </a>
     </div>
 
@@ -77,17 +77,20 @@
       
     
     <ul class="am-menu-nav am-avg-sm-1 am-collapse">
-    <li>
+    <!-- <li>
       <a href="/" class="" >记账</a>
-    </li>
+    </li> -->
     <li>
       <a href="/fintag/tagList" class="" >标签配置</a>
     </li>
-    <li>
+    <li class="am-parent">
       <a href="#c3" class="" >数据</a>
       <ul class="am-menu-sub am-collapse  am-avg-sm-4 ">
         <li class="">
-          <a href="##" class="" >所有数据</a>
+          <a href="/fincnt/allData" class="">所有数据</a>
+        </li>
+        <li class="">
+          <a href="##" class="" >每月概况</a>
         </li>
         <li class="">
           <a href="##" class="" >报表</a>
@@ -102,8 +105,16 @@
         </li>
       </ul>
     </li>
-    <li>
-      <a href="/finbook/bookList" class="" >账本管理</a>
+    <li class="am-parent">
+      <a href="" class="" >账本</a>
+      <ul class="am-menu-sub am-collapse  am-avg-sm-3 ">
+        <li class="">
+          <a href="/finbook/bookList" class="" >账本管理</a>
+        </li>
+        <li class="">
+          <a href="/finbook/bookList" class="" >切换账本</a>
+        </li>
+      </ul>
     </li>
     <li>
       <a href="/logout" class="" >退出</a>
@@ -134,10 +145,10 @@
           $('#divAlert').alert('close')
         }, 2000);
 
-        $.fn.amSelected = $.fn.selected.noConflict();
+        //$.fn.amSelected = $.fn.selected.noConflict();
 
         // 使用 Amaze UI 的 selected
-        $('[data-am-selected]').amSelected();
+        //$('[data-am-selected]').amSelected();
     });
 </script>
 </body>

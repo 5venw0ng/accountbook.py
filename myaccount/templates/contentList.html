@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div style="height: 100%;width:100%;position: fixed;">
+<div class="am-container" style="height: 1%;overflow-y: auto">
+
+</div>
+<div class="am-container" style="height: 65%;overflow-y: auto">
+	<ul class="am-list am-list-static am-list-border">
+	{% set lastDate=cntList[0].billingDate %}
+	{% for bill in cntList %}
+		{% if loop.index0==0 %}
+			{{bill.billingDate}}
+		{% endif %}
+
+		{% if lastDate != bill.billingDate %}
+		</ul>
+		<ul class="am-list am-list-static am-list-border">
+		{{bill.billingDate}}
+		{% endif %}
+		<li style="padding-bottom: 0px;padding-top: 0px;margin-bottom: 5px" onclick="if(window.confirm('删除？')){deleteCnt(this,{{bill.id}})}">
+			<div class="am-container" style="padding: 0px;">
+				<a href="javascript:;" style="padding-left: 0px;padding-top: 5px;padding-bottom: 5px">{%if bill.inOut=='IN' %}收入{% else %}支出{% endif %}</a>：{{bill.amount}}
+				<a href="javascript:;" style="padding-left: 0px;display:initial;float: right">
+				{% for tag in bill.contentTags %}
+				<span class="am-badge am-badge-primary am-radius">{{tag.FinTag.tagName}}</span>
+				{% endfor %}
+				</a>
+			</div>
+			<div class="am-container" style="padding: 0px;">
+				<a href="javascript:;" style="padding-left: 0px;display:initial;padding-top: 5px;float: left;color: #000000">{{bill.billingDate}}</a>
+				<a href="javascript:;" style="padding-left: 0px;display:initial;padding-top: 5px;float: right;color: #000000">{{bill.comments}}</a>
+			</div>
+		</li>
+		{% set lastDate=bill.billingDate %}
+    {% endfor %}
+	</ul>
+</div>
+</div>
+<script type="text/javascript">
+	function deleteCnt(li,cntId){
+		$.get("/fincnt/delCnt/"+cntId,function(data){
+			if("isSuccess" in data && data["isSuccess"]=="Y"){
+				$(li).fadeOut();
+			}
+		},"json")
+	}
+</script>
+{% endblock %}

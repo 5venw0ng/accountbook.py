@@ -37,3 +37,17 @@ def saveFinBook():
 	db.session.commit()
 	return redirect(url_for(".bookList"))
 
+
+@finBook.route('/changeBook/<bookId>')
+def changeBook(bookId=None):
+	if(bookId):
+		defbook = FinanceBook.query.filter_by(isDefault="Y").first()
+		if defbook != None:
+			defbook.isDefault = None
+			db.session.flush()
+
+		book = FinanceBook.query.get(bookId)
+		book.isDefault = 'Y'
+		db.session.flush()
+		session['defbookId'] = bookId
+	return redirect(url_for(".bookList"))

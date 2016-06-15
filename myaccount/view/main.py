@@ -26,8 +26,6 @@ def showMain():
 			tagType = FinanceTagsType.query.filter_by(tagTypeId=tagTypeEntity.tagType).first()
 			tagListGroup.append({'tagType':tagType,'tagList':tagList})
 
-
-		
 		return render_template("main.html",currentDate=time.strftime("%Y-%m-%d", time.localtime()),books=books,tagListGroup=tagListGroup)
 
 @main.route("/login",methods=["POST","GET"])
@@ -43,8 +41,15 @@ def login():
 		if result == None:
 			flash('账号或者密码错误')
 			return redirect(url_for('.login'))
+
+		#取出默认的账本
+		defbook = FinanceBook.query.filter_by(userId=result.id,isDefault='Y').first()
+		if defbook == None:
+			defbook = FinanceBook.query.filter_by(userId=result.id).first()
+
 		session['loginId'] = result.loginId
 		session['userId'] = result.id
+		session['defbookId'] = defbook.id
 		return redirect(url_for(".showMain"))
 
 @main.route("/logout",methods=["POST","GET"])

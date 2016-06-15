@@ -5,7 +5,14 @@
 	<ul class="am-list am-list-striped">
 	{% if books %}
 		{% for book in books %}
-		  <li><a href="/finbook/EditFinBook/{{book.id}}"><i class="am-icon-book am-icon-fw"></i> {{book.bookName}}</a></li>
+		  <li>
+		  	<a href="/finbook/EditFinBook/{{book.id}}">
+	  			<i class="am-icon-book am-icon-fw"></i> {{book.bookName}}
+	  			{% if book.isDefault=='Y' %}
+	  			<span class="am-badge am-badge-success am-radius" style="float: right;">当前账本</span>
+	  			{% endif %}
+	  		</a>
+  		</li>
 		{% endfor %}
 	{% endif %}
 	</ul>
@@ -16,7 +23,4 @@
 	</a>
 	
 </div>
-
-
-
 {% endblock %}

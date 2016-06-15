@@ -1,0 +1,11 @@
+-i https://pypi.doubanio.com/simple
+click==6.6
+Flask
+Flask-Script==2.0.5
+Flask-SQLAlchemy
+itsdangerous==0.24
+Jinja2==2.8
+MarkupSafe==0.23
+https://cdn.mysql.com/Downloads/Connector-Python/mysql-connector-python-2.0.4.tar.gz
+https://pypi.python.org/packages/1d/e2/3df2e0e8cd3cf7e6e2905f1a3d44f1ba51c4fceab0968cc0cb3dcefcb53a/SQLAlchemy-1.0.13.tar.gz
+Werkzeug==0.11.5
