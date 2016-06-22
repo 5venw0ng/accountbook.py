@@ -43,7 +43,7 @@ def loadCurrentDateBill():
 @fincontent.route("/allData",methods=["GET"])
 def allData():
 	userId = session.get("userId")
-	cntList = FinanceContent.query.filter_by(userId=userId,bookId=session['defbookId']).order_by(desc(FinanceContent.craetedDate)).all()
+	cntList = FinanceContent.query.filter_by(userId=userId,bookId=session['defbookId']).order_by(desc(FinanceContent.billingDate)).all()
 	return render_template("contentList.html",cntList=cntList)
 
 #删除一个账单
