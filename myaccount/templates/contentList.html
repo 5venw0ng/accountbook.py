@@ -1,11 +1,42 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<div style="height: 100%;width:100%;position: fixed;">
-<div class="am-container" style="height: 1%;overflow-y: auto">
-
+{% for ctag in tempList %}
+<p>{{ctag.FinContent.comments}}</p>
+{% endfor %}
+<div style="height: 100%;width:100%;position: fixed;margin-top:5px">
+<div class="am-container" style="height: 30%;overflow-y: auto">
+<form action="/fincnt/allData" class="am-form am-form-horizontal" method="post">
+	<div class="am-form-group">
+		<div class="am-u-sm-5">
+		    <input type="text" class="am-form-field" name="fromDate" placeholder="开始时间" value="" data-am-datepicker readonly required>
+		</div>
+		<div class="am-u-sm-2" style="text-align:center">_</div>
+		<div class="am-u-sm-5">
+		    <input type="text" class="am-form-field" name="thruDate" placeholder="结束时间" value="" data-am-datepicker readonly required>
+		</div>
+	</div>
+	{% if tagListGroup %}
+	    {% for tagEntity in tagListGroup %}
+	      <div class="am-form-group">
+			<label for="doc-ipt-3-a" class="am-u-sm-3 am-form-label">{{tagEntity.tagType.description}}</label>
+			<div class="am-u-sm-9">
+			      <select name="selectTag">
+			      	<option value=""></option>
+			        {% for tag in tagEntity.tagList %}
+			        	<option value="{{tag.id}}">{{tag.tagName}}</option>
+			        {% endfor %}
+			      </select>
+			      <span class="am-form-caret"></span>
+			</div>
+		</div>
+	    {% endfor %}
+	{% endif %}
+	<button type="submit" class="am-btn am-btn-primary am-btn-block">查询</button>
+</form>
 </div>
-<div class="am-container" style="height: 65%;overflow-y: auto">
+{% if cntList %}
+<div class="am-container" style="height: 65%;overflow-y: auto;margin-top:5px">
 	<ul class="am-list am-list-static am-list-border">
 	{% set lastDate=cntList[0].billingDate %}
 	{% for bill in cntList %}
@@ -36,7 +67,9 @@
     {% endfor %}
 	</ul>
 </div>
+{% endif %}
 </div>
+
 <script type="text/javascript">
 	function deleteCnt(li,cntId){
 		$.get("/fincnt/delCnt/"+cntId,function(data){
